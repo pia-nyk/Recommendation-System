@@ -2,7 +2,7 @@ import time
 import math
 from pyspark import SparkContext
 import sys
-import task2_2_try
+import xgboost
 import json
 from datetime import datetime
 
@@ -181,7 +181,7 @@ if __name__ == '__main__':
     line['review_count'], (today.year - datetime.strptime(line['yelping_since'], '%Y-%m-%d').year) * 12 + (
                 today.month - datetime.strptime(line['yelping_since'], '%Y-%m-%d').month), line['average_stars'],line['fans'])))
 
-    model = task2_2_try.train_model(train.map(lambda line: (line[0], (line[1], line[2]))), business, user)
+    model = xgboost.train_model(train.map(lambda line: (line[0], (line[1], line[2]))), business, user)
     preds, user_business_cols = task2_2_try.predict(model, validation_model, business, user)
     model_map = {}
     for _ in range(len(preds)):
